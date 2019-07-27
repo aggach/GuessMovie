@@ -2,7 +2,11 @@ package com.company;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class GuessMovieRun {
 
@@ -19,19 +23,12 @@ public class GuessMovieRun {
         String lists = "";
         String[] movieLists = {};
 
-        try {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine() + "\n";
-                lists += line ;
-                movieLists = lists.split("\n");
-            }
 
-        } catch (FileNotFoundException e) {
-            System.out.println("File doesn't found!");
-        }
-        int randomMovie = (int) (Math.random() * movieLists.length);
+        List<String> lista = Files.lines(Paths.get("movies.txt")).collect(Collectors.toList());
+
+
+        int randomMovie = (int) (Math.random() * lista.size());
         //System.out.println(movieLists[randomMovie]);
-        return movieLists[randomMovie];
+        return lista.get(randomMovie);
     }
 }
